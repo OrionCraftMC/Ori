@@ -1,12 +1,11 @@
 package io.github.orioncraftmc.ori.impl.screens
 
-import io.github.orioncraftmc.components.utils.ComponentUtils
+import io.github.orioncraftmc.orion.api.bridge.MinecraftBridge
 import io.github.orioncraftmc.orion.screens.menu.main.MainMenuScreen
-import io.github.orioncraftmc.orion.utils.ColorConstants
 
 class OriMainMenuScreen : MainMenuScreen() {
     override fun renderSkybox(mouseX: Int, mouseY: Int, renderPartialTicks: Float) {
-        ComponentUtils.renderBackgroundColor(this, ColorConstants.modLabelBackgroundColor)
+        MinecraftBridge.drawDefaultBackground()
     }
 
     override fun superDrawScreen(mouseX: Int, mouseY: Int, renderPartialTicks: Float) {

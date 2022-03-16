@@ -4,6 +4,7 @@ import io.github.orioncraftmc.orion.api.bridge.MinecraftBridge
 import io.github.orioncraftmc.orion.api.gui.screens.OrionScreen
 import javafx.animation.AnimationTimer
 import javafx.scene.canvas.Canvas
+import javafx.scene.canvas.GraphicsContext
 
 class OriRenderLoop(val canvas: Canvas) : AnimationTimer() {
     private var lastFrameTime = 0L
@@ -12,11 +13,10 @@ class OriRenderLoop(val canvas: Canvas) : AnimationTimer() {
     var mouseX: Double = 0.0
     var mouseY: Double = 0.0
 
-    val renderContext = canvas.graphicsContext2D
+    val renderContext: GraphicsContext = canvas.graphicsContext2D
 
     override fun handle(now: Long) {
         computeFrameTimes(now)
-
 
         renderContext.isImageSmoothing = false
 

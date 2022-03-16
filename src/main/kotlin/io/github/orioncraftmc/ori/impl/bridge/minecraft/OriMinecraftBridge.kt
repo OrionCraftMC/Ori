@@ -17,6 +17,7 @@ import io.github.orioncraftmc.orion.api.event.impl.LocaleLoadEvent
 import io.github.orioncraftmc.orion.api.gui.screens.OrionScreen
 import javafx.scene.Scene
 import javafx.scene.canvas.Canvas
+import javafx.scene.paint.Color
 import javafx.stage.Stage
 import java.io.File
 import java.util.*
@@ -40,12 +41,40 @@ object OriMinecraftBridge : MinecraftBridge {
         this.canvas = canvas
         this.renderLoop = OriRenderLoop(canvas).also { it.start() }
 
-        canvas.setOnMouseMoved {
+        canvas.setupMouseEvents()
+
+        MinecraftBridge.openScreen(OriMainMenuScreen())
+    }
+
+    private fun Canvas.setupMouseEvents() {
+        setOnMousePressed {
+            val orionScreen = MinecraftBridge.currentOpenedScreen as? OrionScreen ?: return@setOnMousePressed
+            val mouseX = it.x.toInt()
+            val mouseY = it.y.toInt()
+
+            orionScreen.handleMouseClick(mouseX, mouseY, it.button.ordinal)
+        }
+
+        setOnMouseReleased {
+            val orionScreen = MinecraftBridge.currentOpenedScreen as? OrionScreen ?: return@setOnMouseReleased
+            val mouseX = it.x.toInt()
+            val mouseY = it.y.toInt()
+
+            orionScreen.handleMouseRelease(mouseX, mouseY)
+        }
+
+        setOnMouseClicked {
+            val orionScreen = MinecraftBridge.currentOpenedScreen as? OrionScreen ?: return@setOnMouseClicked
+            val mouseX = it.x.toInt()
+            val mouseY = it.y.toInt()
+
+            orionScreen.handleMouseClick(mouseX, mouseY)
+        }
+
+        setOnMouseMoved {
             renderLoop.mouseX = it.x
             renderLoop.mouseY = it.y
         }
-
-        MinecraftBridge.openScreen(OriMainMenuScreen())
     }
 
     fun stop() {
@@ -78,7 +107,8 @@ object OriMinecraftBridge : MinecraftBridge {
         get() = OriScaledResolutionBridge
 
     override fun drawDefaultBackground() {
-        TODO("Not yet implemented")
+        renderLoop.renderContext.fill = Color.rgb(0, 0, 0, 0.435)
+        renderLoop.renderContext.fillRect(0.0, 0.0, renderLoop.canvas.width, renderLoop.canvas.height)
     }
 
     override fun openScreen(screen: OrionScreen?) {
