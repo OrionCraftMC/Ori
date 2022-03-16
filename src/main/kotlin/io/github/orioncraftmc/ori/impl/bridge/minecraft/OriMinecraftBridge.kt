@@ -91,14 +91,14 @@ object OriMinecraftBridge : MinecraftBridge {
     override val fontRenderer: FontRendererBridge
         get() = OriFontRendererBridge
 
+    override val gameWidth: Int
+        get() = renderLoop.canvas.width.toInt()
+
     override val gameHeight: Int
-        get() = TODO("Not yet implemented")
+        get() = renderLoop.canvas.height.toInt()
 
     override val gameSettings: GameSettingsBridge
         get() = OriGameSettingsBridge
-
-    override val gameWidth: Int
-        get() = TODO("Not yet implemented")
 
     override val renderEngine: RenderEngineBridge
         get() = OriRenderEngineBridge
