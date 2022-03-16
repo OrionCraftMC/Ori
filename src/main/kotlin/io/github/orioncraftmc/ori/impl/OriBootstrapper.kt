@@ -17,7 +17,12 @@ object OriBootstrapper {
      * @param clientDirectory The directory to bootstrap the client to.
      * @param isDevLaunch True if the client is being launched in development mode.
      */
-    fun bootstrap(clientVersion: ClientVersion, clientDirectory: File, clientLocale: String, isDevLaunch: Boolean) {
+    fun bootstrap(
+        clientVersion: ClientVersion,
+        clientDirectory: File,
+        clientLocale: String,
+        isDevLaunch: Boolean
+    ) {
         /* Set whether the client is in development mode. */
         System.setProperty("lightcraft.launch.dev", isDevLaunch.toString())
 

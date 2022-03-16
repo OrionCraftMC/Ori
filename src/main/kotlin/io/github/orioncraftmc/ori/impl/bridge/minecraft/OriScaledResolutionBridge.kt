@@ -3,18 +3,19 @@ package io.github.orioncraftmc.ori.impl.bridge.minecraft
 import io.github.orioncraftmc.orion.api.bridge.minecraft.ScaledResolutionBridge
 
 object OriScaledResolutionBridge : ScaledResolutionBridge {
+
     override val scaleFactor: Int
         get() = 1
 
     override val scaledHeight: Int
-        get() = OriMinecraftBridge.canvas.height.toInt()
+        get() = scaledHeightFloat.toInt()
 
     override val scaledHeightFloat: Float
-        get() = scaledHeight.toFloat()
+        get() = OriMinecraftBridge.canvas.height.toFloat()
 
     override val scaledWidth: Int
-        get() = OriMinecraftBridge.canvas.width.toInt()
+        get() = scaledWidthFloat.toInt()
 
     override val scaledWidthFloat: Float
-        get() = scaledWidth.toFloat()
+        get() = OriMinecraftBridge.canvas.width.toFloat()
 }

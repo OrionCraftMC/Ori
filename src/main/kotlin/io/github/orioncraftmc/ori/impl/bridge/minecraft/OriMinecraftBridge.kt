@@ -28,6 +28,7 @@ object OriMinecraftBridge : MinecraftBridge {
     lateinit var canvas: Canvas
     lateinit var scene: Scene
     lateinit var renderLoop: OriRenderLoop
+
     fun initializeLocale(lang: String) {
         locale = Properties()
         EventBus.callEvent(LocaleLoadEvent(lang, locale))

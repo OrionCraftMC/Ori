@@ -14,17 +14,19 @@ class OriRenderLoop(val canvas: Canvas) : AnimationTimer() {
 
     val renderContext = canvas.graphicsContext2D
 
-
     override fun handle(now: Long) {
         computeFrameTimes(now)
 
+
+        renderContext.isImageSmoothing = false
+
+        renderContext.save()
+
         renderContext.clearRect(0.0, 0.0, canvas.width, canvas.height)
 
-        // Draw fps on screen
-        renderContext.fillText("FPS: $fps", 10.0, 10.0)
-
-
         (MinecraftBridge.currentOpenedScreen as? OrionScreen)?.drawScreen(mouseX.toInt(), mouseY.toInt(), 0f)
+
+        renderContext.restore()
     }
 
     private fun computeFrameTimes(now: Long) {
