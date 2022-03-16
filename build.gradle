@@ -1,0 +1,48 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.jetbrains.kotlin.jvm' version '1.6.10'
+    id 'org.openjfx.javafxplugin' version '0.0.10'
+}
+
+group 'io.github.orioncraftmc'
+version '1.0.0-SNAPSHOT'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    maven { url "https://raw.githubusercontent.com/NickAcPT/LightCraftMaven/main/" }
+    maven { url "https://jitpack.io" }
+}
+
+dependencies {
+    implementation("io.github.orioncraftmc.orion:api:1.0-SNAPSHOT") {
+        exclude module: "discord-game-sdk4j"
+    }
+    implementation "io.github.orioncraftmc.orion:mods:1.0-SNAPSHOT"
+    implementation "com.github.ajalt.clikt:clikt:3.4.0"
+    implementation "com.github.JnCrMx:discord-game-sdk4j:ce9fb36091"
+}
+
+sourceCompatibility = '17'
+targetCompatibility = '17'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+application {
+    mainClass = 'io.github.orioncraftmc.ori.EntrypointKt'
+}
+
+[compileKotlin, compileTestKotlin].forEach {
+    it.kotlinOptions {
+        jvmTarget = '17'
+    }
+}
+
+javafx {
+    version = '17.0.1'
+    modules = ['javafx.controls', 'javafx.fxml']
+}
