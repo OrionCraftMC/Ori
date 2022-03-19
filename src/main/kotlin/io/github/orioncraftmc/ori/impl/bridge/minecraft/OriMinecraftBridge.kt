@@ -113,7 +113,7 @@ object OriMinecraftBridge : MinecraftBridge {
 
     override fun openScreen(screen: OrionScreen?) {
         (currentOpenedScreen as? OrionScreen)?.onClose()
-        currentOpenedScreen = screen?.also { it.onResize() }
+        currentOpenedScreen = (screen ?: OriMainMenuScreen()).also { it.onResize() }
     }
 
     fun notifyResize(w: Double, h: Double) {
