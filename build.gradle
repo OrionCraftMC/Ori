@@ -17,12 +17,9 @@ repositories {
 }
 
 dependencies {
-    implementation("io.github.orioncraftmc.orion:api:1.0-SNAPSHOT") {
-        exclude module: "discord-game-sdk4j"
-    }
-    implementation "io.github.orioncraftmc.orion:mods:1.0-SNAPSHOT"
-    implementation "com.github.ajalt.clikt:clikt:3.4.0"
-    implementation "com.github.JnCrMx:discord-game-sdk4j:ce9fb36091"
+    implementation("io.github.orioncraftmc.orion:api")
+    implementation("io.github.orioncraftmc.orion:mods")
+    implementation("com.github.ajalt.clikt:clikt:3.4.0")
 }
 
 sourceCompatibility = '17'
