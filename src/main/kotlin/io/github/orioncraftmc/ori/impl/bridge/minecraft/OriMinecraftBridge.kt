@@ -17,6 +17,7 @@ import io.github.orioncraftmc.orion.api.event.impl.LocaleLoadEvent
 import io.github.orioncraftmc.orion.api.gui.screens.OrionScreen
 import javafx.scene.Scene
 import javafx.scene.canvas.Canvas
+import javafx.scene.input.MouseEvent
 import javafx.scene.paint.Color
 import javafx.scene.transform.Scale
 import javafx.stage.Stage
@@ -43,7 +44,7 @@ object OriMinecraftBridge : MinecraftBridge {
         this.canvas = canvas
         this.renderLoop = OriRenderLoop(canvas).also { it.start() }
 
-        arrayOf(scene.widthProperty(), scene.heightProperty()).forEach {
+        arrayOf(canvas.widthProperty(), canvas.heightProperty(), stage.maximizedProperty()).forEach {
             it.addListener { _, _, _ ->
                 OriScaledResolutionBridge.onGuiScaleUpdated()
             }
@@ -57,34 +58,39 @@ object OriMinecraftBridge : MinecraftBridge {
     }
 
     private fun Canvas.setupMouseEvents() {
-        setOnMousePressed {
-            val orionScreen = MinecraftBridge.currentOpenedScreen as? OrionScreen ?: return@setOnMousePressed
-            val mouseX = it.x.toInt()
-            val mouseY = it.y.toInt()
-
-            orionScreen.handleMouseClick(mouseX, mouseY, it.button.ordinal)
-        }
-
         setOnMouseReleased {
             val orionScreen = MinecraftBridge.currentOpenedScreen as? OrionScreen ?: return@setOnMouseReleased
             val mouseX = it.x.toInt()
             val mouseY = it.y.toInt()
 
+            renderLoop.mouseX = it.x
+            renderLoop.mouseY = it.y
+
             orionScreen.handleMouseRelease(mouseX, mouseY)
         }
 
-        setOnMouseClicked {
-            val orionScreen = MinecraftBridge.currentOpenedScreen as? OrionScreen ?: return@setOnMouseClicked
+        setOnMousePressed {
+            val orionScreen = MinecraftBridge.currentOpenedScreen as? OrionScreen ?: return@setOnMousePressed
             val mouseX = it.x.toInt()
             val mouseY = it.y.toInt()
 
-            orionScreen.handleMouseClick(mouseX, mouseY)
+            updateMousePosFromEvent(it)
+            orionScreen.handleMouseClick(mouseX, mouseY, it.button.ordinal)
+        }
+
+        setOnMouseDragged {
+            updateMousePosFromEvent(it)
         }
 
         setOnMouseMoved {
-            renderLoop.mouseX = it.x
-            renderLoop.mouseY = it.y
+            updateMousePosFromEvent(it)
+
         }
+    }
+
+    private fun updateMousePosFromEvent(it: MouseEvent) {
+        renderLoop.mouseX = it.x
+        renderLoop.mouseY = it.y
     }
 
     fun stop() {
