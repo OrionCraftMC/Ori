@@ -18,6 +18,7 @@ import io.github.orioncraftmc.orion.api.gui.screens.OrionScreen
 import javafx.scene.Scene
 import javafx.scene.canvas.Canvas
 import javafx.scene.paint.Color
+import javafx.scene.transform.Scale
 import javafx.stage.Stage
 import java.io.File
 import java.util.*
@@ -29,6 +30,7 @@ object OriMinecraftBridge : MinecraftBridge {
     lateinit var canvas: Canvas
     lateinit var scene: Scene
     lateinit var renderLoop: OriRenderLoop
+    lateinit var guiScale: GuiScale
 
     fun initializeLocale(lang: String) {
         locale = Properties()
@@ -40,6 +42,14 @@ object OriMinecraftBridge : MinecraftBridge {
         this.scene = scene
         this.canvas = canvas
         this.renderLoop = OriRenderLoop(canvas).also { it.start() }
+
+        arrayOf(scene.widthProperty(), scene.heightProperty()).forEach {
+            it.addListener { _, _, _ ->
+                OriScaledResolutionBridge.onGuiScaleUpdated()
+            }
+        }
+
+        OriScaledResolutionBridge.onGuiScaleUpdated()
 
         canvas.setupMouseEvents()
 
@@ -122,6 +132,14 @@ object OriMinecraftBridge : MinecraftBridge {
 
     override fun translateString(translationKey: String): String {
         return locale.getProperty(translationKey) ?: translationKey
+    }
+
+    fun onScaleFactorChanged(scaleFactor: Int) {
+        val factor = scaleFactor.toDouble()
+        OriFontRendererBridge.resetMinecraftFont()
+        scene.root.transforms.setAll(Scale(factor, factor).also {
+            it.pivotX = 0.0; it.pivotY = 0.0
+        })
     }
 
 }
