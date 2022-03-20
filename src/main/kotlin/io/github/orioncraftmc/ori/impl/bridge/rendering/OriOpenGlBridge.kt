@@ -5,6 +5,9 @@ import io.github.orioncraftmc.orion.api.bridge.rendering.OpenGlBridge
 import io.github.orioncraftmc.orion.api.bridge.rendering.enums.GlCapability
 
 object OriOpenGlBridge : OpenGlBridge {
+    var lineWidth : Float = 1f
+        private set
+
     override fun disableCapability(capability: GlCapability) {
         
     }
@@ -34,7 +37,7 @@ object OriOpenGlBridge : OpenGlBridge {
     }
 
     override fun setLineWidth(width: Float) {
-        
+        lineWidth = width
     }
 
     override fun translate(x: Double, y: Double, z: Double) {
