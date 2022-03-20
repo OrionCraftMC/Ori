@@ -36,7 +36,7 @@ object OriFontRendererBridge : FontRendererBridge {
             drawString(value, finalX + 2, finalY + 2, original.copy(l = original.l - 25).toSRGB().toRGBInt().argb, false)
         }
 
-        val ctx = OriMinecraftBridge.renderLoop.renderContext
+        val ctx = OriMinecraftBridge.renderLoop.currentRenderContext
         ctx.font = font
         val height = fontHeight.toDouble()
 

@@ -28,7 +28,7 @@ object OriTessellatorBridge : TessellatorBridge {
 
     override fun draw() {
         if (drawMode == DrawMode.QUADS) {
-            OriMinecraftBridge.renderLoop.renderContext.run {
+            OriMinecraftBridge.renderLoop.currentRenderContext.run {
                 fill = color
                 val image = OriRenderEngineBridge.image
                 if (isDrawImage && image != null) {

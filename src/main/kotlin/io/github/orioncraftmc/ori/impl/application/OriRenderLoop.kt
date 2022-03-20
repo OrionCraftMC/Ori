@@ -9,24 +9,24 @@ import javafx.scene.canvas.GraphicsContext
 class OriRenderLoop(val canvas: Canvas) : AnimationTimer() {
     private var lastFrameTime = 0L
     private var deltaFrameTime = 0L
-    private var fps = 0
+    var fps = 0
     var mouseX: Double = 0.0
     var mouseY: Double = 0.0
 
-    val renderContext: GraphicsContext = canvas.graphicsContext2D
+    val currentRenderContext: GraphicsContext = canvas.graphicsContext2D
 
     override fun handle(now: Long) {
         computeFrameTimes(now)
 
-        renderContext.isImageSmoothing = false
+        currentRenderContext.isImageSmoothing = false
 
-        renderContext.save()
+        currentRenderContext.save()
 
-        renderContext.clearRect(0.0, 0.0, canvas.width, canvas.height)
+        currentRenderContext.clearRect(0.0, 0.0, canvas.width, canvas.height)
 
         (MinecraftBridge.currentOpenedScreen as? OrionScreen)?.drawScreen(mouseX.toInt(), mouseY.toInt(), 0f)
 
-        renderContext.restore()
+        currentRenderContext.restore()
     }
 
     private fun computeFrameTimes(now: Long) {

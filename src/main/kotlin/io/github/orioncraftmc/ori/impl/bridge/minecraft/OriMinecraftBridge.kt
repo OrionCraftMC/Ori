@@ -96,7 +96,7 @@ object OriMinecraftBridge : MinecraftBridge {
     override var gameAppDirectory: File = File(".")
 
     override val currentFps: Int
-        get() = TODO("Not yet implemented")
+        get() = renderLoop.fps
 
     override val fontRenderer: FontRendererBridge
         get() = OriFontRendererBridge
@@ -117,8 +117,8 @@ object OriMinecraftBridge : MinecraftBridge {
         get() = OriScaledResolutionBridge
 
     override fun drawDefaultBackground() {
-        renderLoop.renderContext.fill = Color.rgb(0, 0, 0, 0.435)
-        renderLoop.renderContext.fillRect(0.0, 0.0, renderLoop.canvas.width, renderLoop.canvas.height)
+        renderLoop.currentRenderContext.fill = Color.rgb(0, 0, 0, 0.435)
+        renderLoop.currentRenderContext.fillRect(0.0, 0.0, renderLoop.canvas.width, renderLoop.canvas.height)
     }
 
     override fun openScreen(screen: OrionScreen?) {

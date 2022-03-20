@@ -18,15 +18,15 @@ object OriOpenGlBridge : OpenGlBridge {
     }
 
     override fun popMatrix() {
-        OriMinecraftBridge.renderLoop.renderContext.restore()
+        OriMinecraftBridge.renderLoop.currentRenderContext.restore()
     }
 
     override fun pushMatrix() {
-        OriMinecraftBridge.renderLoop.renderContext.save()
+        OriMinecraftBridge.renderLoop.currentRenderContext.save()
     }
 
     override fun scale(x: Double, y: Double, z: Double) {
-        OriMinecraftBridge.renderLoop.renderContext.scale(x, y)
+        OriMinecraftBridge.renderLoop.currentRenderContext.scale(x, y)
     }
 
     override fun setColor(red: Int, green: Int, blue: Int, alpha: Int) {
@@ -38,6 +38,6 @@ object OriOpenGlBridge : OpenGlBridge {
     }
 
     override fun translate(x: Double, y: Double, z: Double) {
-        OriMinecraftBridge.renderLoop.renderContext.translate(x, y)
+        OriMinecraftBridge.renderLoop.currentRenderContext.translate(x, y)
     }
 }
