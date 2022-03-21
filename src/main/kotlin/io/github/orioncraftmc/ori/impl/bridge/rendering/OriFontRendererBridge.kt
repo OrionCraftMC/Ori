@@ -28,12 +28,9 @@ object OriFontRendererBridge : FontRendererBridge {
         get() = metrics.lineHeight.toInt() / OriScaledResolutionBridge.scaleFactor
 
     override fun drawString(value: String, x: Int, y: Int, color: UInt, hasShadow: Boolean) {
-        val finalX = x / OriScaledResolutionBridge.scaleFactor
-        val finalY = y / OriScaledResolutionBridge.scaleFactor
-
         if (hasShadow) {
             val original = RGBInt(color).toSRGB().toHSL()
-            drawString(value, finalX + 2, finalY + 2, original.copy(l = original.l - 25).toSRGB().toRGBInt().argb, false)
+            drawString(value, x + 1, y + 1, original.copy(l = original.l - 25).toSRGB().toRGBInt().argb, false)
         }
 
         val ctx = OriMinecraftBridge.renderLoop.currentRenderContext
@@ -44,9 +41,13 @@ object OriFontRendererBridge : FontRendererBridge {
 
         ctx.fill = Color.rgb(r.toInt(), g.toInt(), b.toInt(), a.toInt() / 255.0)
         val descent = metrics.descent / OriScaledResolutionBridge.scaleFactor
-        ctx.fillText(value, finalX.toDouble(), (finalY.toDouble() + height - descent))
+        ctx.fillText(value, x.toDouble(), (y.toDouble() + height - descent))
+    }
+
+    private fun stripColors(value: String): String {
+        return value.replace("§[\\da-fA-Fl-oL-O]".toRegex(), "")
     }
 
     override fun getStringWidth(value: String): Int =
-        value.sumOf { metrics.getCharWidth(it).toInt() } / OriScaledResolutionBridge.scaleFactor
+        stripColors(value).sumOf { metrics.getCharWidth(it).toInt() } / OriScaledResolutionBridge.scaleFactor
 }
