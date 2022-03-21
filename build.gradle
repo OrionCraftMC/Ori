@@ -17,8 +17,7 @@ repositories {
 }
 
 dependencies {
-    implementation("io.github.orioncraftmc.orion:api")
-    implementation("io.github.orioncraftmc.orion:mods")
+    implementation("io.github.orioncraftmc.orion:OrionCraft")
     implementation("com.github.ajalt.clikt:clikt:3.4.0")
 }
 
