@@ -14,4 +14,6 @@ object OriGameSettingsBridge : GameSettingsBridge {
         set(value) {
             OriMinecraftBridge.guiScale = GuiScale.values()[value]
         }
+
+    override var isDebugInfoVisible: Boolean by GameSettingsLogDelegate(false)
 }
