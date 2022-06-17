@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'application'
-    id 'org.jetbrains.kotlin.jvm' version '1.6.10'
+    id 'org.jetbrains.kotlin.jvm' version '1.7.0'
     id 'org.openjfx.javafxplugin' version '0.0.10'
 }
 
@@ -21,8 +21,8 @@ dependencies {
     implementation("com.github.ajalt.clikt:clikt:3.4.0")
 }
 
-sourceCompatibility = '17'
-targetCompatibility = '17'
+sourceCompatibility = '18'
+targetCompatibility = '18'
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
@@ -34,11 +34,11 @@ application {
 
 [compileKotlin, compileTestKotlin].forEach {
     it.kotlinOptions {
-        jvmTarget = '17'
+        jvmTarget = '18'
     }
 }
 
 javafx {
-    version = '17.0.1'
+    version = '18.0.1'
     modules = ['javafx.controls', 'javafx.fxml']
 }
