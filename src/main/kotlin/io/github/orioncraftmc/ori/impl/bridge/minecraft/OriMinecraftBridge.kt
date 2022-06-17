@@ -1,6 +1,7 @@
 package io.github.orioncraftmc.ori.impl.bridge.minecraft
 
 import io.github.orioncraftmc.ori.impl.application.OriRenderLoop
+import io.github.orioncraftmc.ori.impl.application.OriRenderType
 import io.github.orioncraftmc.ori.impl.bridge.rendering.OriFontRendererBridge
 import io.github.orioncraftmc.ori.impl.bridge.rendering.OriRenderEngineBridge
 import io.github.orioncraftmc.ori.impl.bridge.settings.OriGameSettingsBridge
@@ -28,6 +29,7 @@ object OriMinecraftBridge : MinecraftBridge {
 
     private lateinit var locale: Properties
     lateinit var stage: Stage
+    lateinit var renderType: OriRenderType
     lateinit var canvas: Canvas
     lateinit var scene: Scene
     lateinit var renderLoop: OriRenderLoop
@@ -42,7 +44,7 @@ object OriMinecraftBridge : MinecraftBridge {
         this.stage = stage
         this.scene = scene
         this.canvas = canvas
-        this.renderLoop = OriRenderLoop(canvas).also { it.start() }
+        this.renderLoop = OriRenderLoop(canvas, renderType).also { it.start() }
 
         arrayOf(canvas.widthProperty(), canvas.heightProperty(), stage.maximizedProperty()).forEach {
             it.addListener { _, _, _ ->

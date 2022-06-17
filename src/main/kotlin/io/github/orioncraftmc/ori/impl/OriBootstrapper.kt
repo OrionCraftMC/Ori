@@ -1,5 +1,6 @@
 package io.github.orioncraftmc.ori.impl
 
+import io.github.orioncraftmc.ori.impl.application.OriRenderType
 import io.github.orioncraftmc.ori.impl.bridge.OriBridgeProvider
 import io.github.orioncraftmc.ori.impl.bridge.minecraft.GuiScale
 import io.github.orioncraftmc.ori.impl.bridge.minecraft.OriMinecraftBridge
@@ -23,7 +24,8 @@ object OriBootstrapper {
         clientDirectory: File,
         clientLocale: String,
         isDevLaunch: Boolean,
-        guiScale: GuiScale
+        guiScale: GuiScale,
+        renderType: OriRenderType
     ) {
         /* Set whether the client is in development mode. */
         System.setProperty("lightcraft.launch.dev", isDevLaunch.toString())
@@ -35,6 +37,7 @@ object OriBootstrapper {
         OriMinecraftBridge.initializeLocale(clientLocale)
         OriMinecraftBridge.gameAppDirectory = clientDirectory.also { it.mkdirs() }
         OriMinecraftBridge.guiScale = guiScale
+        OriMinecraftBridge.renderType = renderType
 
         /* Then, after OrionCraft has been initialized, initialize Ori by passing the bridge implementations. */
         OrionCraft.setOrionCraftBridgesEntrypoint(OriBridgeProvider)
