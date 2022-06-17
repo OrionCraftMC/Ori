@@ -14,4 +14,10 @@ object OriKeybindingUtils : KeybindingUtils {
 
         return OriKeybinding(keybind).also { registeredKeybindings[keybind.id] = it }
     }
+
+    override fun unregisterKeybinding(keybind: OrionKeybindingBridge) {
+        logger.debug("Unregistering keybinding [${MinecraftBridge.translateString(keybind.orionKeybinding.id)}")
+
+        registeredKeybindings.remove(keybind.orionKeybinding.id)
+    }
 }
