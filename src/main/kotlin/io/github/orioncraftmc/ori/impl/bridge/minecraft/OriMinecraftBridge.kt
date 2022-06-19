@@ -6,8 +6,10 @@ import io.github.orioncraftmc.ori.impl.bridge.rendering.OriFontRendererBridge
 import io.github.orioncraftmc.ori.impl.bridge.rendering.OriRenderEngineBridge
 import io.github.orioncraftmc.ori.impl.bridge.settings.OriGameSettingsBridge
 import io.github.orioncraftmc.ori.impl.screens.OriMainMenuScreen
+import io.github.orioncraftmc.orion.api.bridge.MainMenuUtils
 import io.github.orioncraftmc.orion.api.bridge.MinecraftBridge
 import io.github.orioncraftmc.orion.api.bridge.gui.GuiScreenBridge
+import io.github.orioncraftmc.orion.api.bridge.main.MainMenuAction
 import io.github.orioncraftmc.orion.api.bridge.minecraft.GameSettingsBridge
 import io.github.orioncraftmc.orion.api.bridge.minecraft.MinecraftBridge
 import io.github.orioncraftmc.orion.api.bridge.minecraft.ScaledResolutionBridge
@@ -15,6 +17,7 @@ import io.github.orioncraftmc.orion.api.bridge.rendering.FontRendererBridge
 import io.github.orioncraftmc.orion.api.bridge.rendering.RenderEngineBridge
 import io.github.orioncraftmc.orion.api.event.EventBus
 import io.github.orioncraftmc.orion.api.event.impl.LocaleLoadEvent
+import io.github.orioncraftmc.orion.api.gui.hud.editor.ModsEditorScreen
 import io.github.orioncraftmc.orion.api.gui.screens.OrionScreen
 import javafx.scene.Scene
 import javafx.scene.canvas.Canvas
@@ -56,7 +59,7 @@ object OriMinecraftBridge : MinecraftBridge {
 
         canvas.setupMouseEvents()
 
-        MinecraftBridge.openScreen(OriMainMenuScreen())
+        MinecraftBridge.openScreen(ModsEditorScreen(true))
     }
 
     private fun Canvas.setupMouseEvents() {
@@ -86,7 +89,6 @@ object OriMinecraftBridge : MinecraftBridge {
 
         setOnMouseMoved {
             updateMousePosFromEvent(it)
-
         }
     }
 
